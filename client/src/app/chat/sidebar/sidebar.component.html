@@ -15,6 +15,9 @@
 </div>
 
 <div class="conv-list">
+  @if (deleteError()) {
+    <p class="delete-error">{{ deleteError() }}</p>
+  }
   @if (loading) {
     <p class="empty-msg">Loading...</p>
   } @else if (error) {

@@ -43,7 +43,7 @@ export class ChatComponent implements OnInit {
       : ChatComponent.FALLBACK_SCENARIOS;
   });
   sidebarOpen = signal(typeof window !== 'undefined' && window.innerWidth >= 768);
-  isDark = signal(false);
+  isDark = signal(typeof window !== 'undefined' && localStorage.getItem('theme') === 'dark');
 
   ngOnInit(): void {
     this.loadConvs();
@@ -166,6 +166,10 @@ export class ChatComponent implements OnInit {
   }
 
   toggleTheme(): void {
-    this.isDark.update((v) => !v);
+    this.isDark.update((v) => {
+      const next = !v;
+      localStorage.setItem('theme', next ? 'dark' : 'light');
+      return next;
+    });
   }
 }

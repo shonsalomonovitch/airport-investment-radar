@@ -40,6 +40,7 @@ export class SidebarComponent {
   renameError = signal('');
   savingRename = signal(false);
   deletingId = signal<number | null>(null);
+  deleteError = signal('');
 
   startRename(conv: ConversationSummary, event: Event): void {
     event.stopPropagation();
@@ -85,13 +86,19 @@ export class SidebarComponent {
   deleteConv(id: number, event: Event): void {
     event.stopPropagation();
     if (this.deletingId() !== null) return;
+    this.deleteError.set('');
     this.deletingId.set(id);
     this.agentService.deleteConv(id).subscribe({
       next: () => {
+        if (this.renamingId() === id) this.cancelRename();
         this.convDeleted.emit(id);
         this.deletingId.set(null);
       },
-      error: () => this.deletingId.set(null),
+      error: () => {
+        this.deletingId.set(null);
+        this.deleteError.set('Could not delete. Please try again.');
+        setTimeout(() => this.deleteError.set(''), 3000);
+      },
     });
   }
 }

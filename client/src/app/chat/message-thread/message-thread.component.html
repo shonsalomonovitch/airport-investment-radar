@@ -11,7 +11,7 @@
   </div>
 }
 
-@for (msg of msgs; track msg.timestamp; let i = $index) {
+@for (msg of msgs; track $index; let i = $index) {
   <div
     class="msg-row"
     [class.row-user]="msg.role === 'user'"
