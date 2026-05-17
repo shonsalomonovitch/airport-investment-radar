@@ -1,0 +1,64 @@
+@if (msgs.length === 0 && !loading) {
+  <div class="empty-state">
+    <img src="icon.png" alt="Airport Investment Radar" class="empty-logo" />
+    <p class="empty-title">Airport Investment Radar</p>
+    <p class="empty-subtitle">Ask me anything about airport investment potential, congestion, demand, and routes.</p>
+    <div class="scenarios">
+      @for (s of scenarios; track s) {
+        <button class="scenario-btn" (click)="scenarioClick.emit(s)" type="button">{{ s }}</button>
+      }
+    </div>
+  </div>
+}
+
+@for (msg of msgs; track msg.timestamp; let i = $index) {
+  <div
+    class="msg-row"
+    [class.row-user]="msg.role === 'user'"
+    [style.margin-bottom]="isGroupEnd(i) ? '10px' : '2px'"
+  >
+    @if (msg.role !== 'user') {
+      <div class="avatar" [style.visibility]="isGroupEnd(i) ? 'visible' : 'hidden'">
+        <img src="icon.png" alt="" class="avatar-logo" />
+      </div>
+    }
+
+    <div class="bubble-col" [class.col-user]="msg.role === 'user'">
+      <div
+        class="bubble"
+        [style.background-color]="bubbleBg(msg.role)"
+        [style.color]="bubbleTextColor(msg.role)"
+        [style.border-radius]="bubbleRadius(msg.role, i)"
+      >
+        @if (msg.role === 'assistant') {
+          <div class="md-content" [innerHTML]="msg.content | markdown"></div>
+        } @else {
+          {{ msg.content }}
+        }
+      </div>
+
+      @if (isGroupEnd(i)) {
+        <span class="bubble-time">{{ fmtTime(msg.timestamp) }}</span>
+      }
+    </div>
+
+    @if (msg.role === 'user') {
+      <div class="avatar user-avatar" [style.visibility]="isGroupEnd(i) ? 'visible' : 'hidden'">Y</div>
+    }
+  </div>
+}
+
+@if (loading) {
+  <div class="msg-row" style="margin-bottom:10px;">
+    <div class="avatar">
+      <img src="icon.png" alt="" class="avatar-logo" />
+    </div>
+    <div class="typing-bubble">
+      <span class="dot" style="animation-delay:0ms"></span>
+      <span class="dot" style="animation-delay:200ms"></span>
+      <span class="dot" style="animation-delay:400ms"></span>
+    </div>
+  </div>
+}
+
+<div #bottomAnchor></div>

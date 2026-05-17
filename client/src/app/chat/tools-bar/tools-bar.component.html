@@ -1,0 +1,22 @@
+@if (capabilities.length > 0) {
+  <div class="tools-bar">
+    <button class="toggle-btn" (click)="toggle()" type="button">
+      <span class="label">What can I ask?</span>
+      <span class="chevron" [style.transform]="expanded() ? 'rotate(180deg)' : 'rotate(0deg)'">▾</span>
+    </button>
+
+    @if (expanded()) {
+      <div class="chips">
+        @for (cap of capabilities; track cap.displayName) {
+          <div class="chip-wrapper">
+            <button class="chip" type="button">
+              <span class="chip-emoji">{{ capEmoji(cap.displayName) }}</span>
+              <span class="chip-label">{{ cap.displayName }}</span>
+            </button>
+            <div class="tooltip">{{ cap.description }}</div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

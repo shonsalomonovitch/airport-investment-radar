@@ -1,0 +1,101 @@
+.tools-bar {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  background: var(--input-bg);
+  padding: 6px 12px;
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--gray-text);
+  font-weight: 500;
+}
+.toggle-btn:hover { color: var(--text); }
+
+.chevron {
+  font-size: 14px;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+/* ── Chip grid ── */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  padding-bottom: 4px;
+}
+
+/* ── Wrapper holds chip + tooltip together ── */
+.chip-wrapper {
+  position: relative;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: default;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.chip:hover {
+  background: var(--gray-bg);
+  border-color: var(--blue);
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.12);
+}
+
+.chip-emoji { font-size: 14px; line-height: 1; }
+.chip-label { line-height: 1; }
+
+/* ── Tooltip ── */
+.tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 7px 10px;
+  border-radius: 8px;
+  white-space: normal;
+  width: 220px;
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Arrow */
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--tooltip-bg);
+}
+
+.chip-wrapper:hover .tooltip { display: block; }

@@ -1,0 +1,157 @@
+:host {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 12px 12px 4px;
+  display: block;
+  background: var(--bg);
+}
+
+/* ── Empty state ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.empty-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 28px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.14);
+}
+
+.empty-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+
+.empty-subtitle {
+  font-size: 13px;
+  color: var(--gray-text);
+  margin: 0 0 20px;
+  max-width: 340px;
+  line-height: 1.5;
+}
+
+.scenarios {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.scenario-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s, border-color 0.12s;
+  line-height: 1.4;
+}
+.scenario-btn:hover {
+  background: var(--gray-bg);
+  border-color: var(--blue);
+}
+
+/* ── Message rows ── */
+.msg-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.row-user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--gray-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  min-width: 28px;
+  overflow: hidden;
+}
+
+.avatar-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.user-avatar {
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.bubble-col {
+  display: flex;
+  flex-direction: column;
+  max-width: 78%;
+}
+
+.col-user { align-items: flex-end; }
+
+.bubble {
+  padding: 9px 13px;
+  font-size: 15px;
+  line-height: 1.4;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* assistant bubbles contain HTML — no pre-wrap */
+.bubble .md-content { white-space: normal; }
+
+.bubble-time {
+  font-size: 11px;
+  color: var(--gray-text);
+  margin-top: 3px;
+  padding: 0 4px;
+}
+
+/* ── Typing indicator ── */
+.typing-bubble {
+  background: var(--gray-bg);
+  border-radius: 18px 18px 18px 4px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(-6px); }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gray-text);
+  animation: bounce 1.2s infinite;
+  display: inline-block;
+}
