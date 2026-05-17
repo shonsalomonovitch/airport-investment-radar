@@ -31,7 +31,13 @@
         [style.border-radius]="bubbleRadius(msg.role, i)"
       >
         @if (msg.role === 'assistant') {
-          <div class="md-content" [innerHTML]="msg.content | markdown"></div>
+          @for (seg of parseSegments(msg.content); track $index) {
+            @if (seg.type === 'chart') {
+              <app-chart-block [raw]="seg.content" />
+            } @else {
+              <div class="md-content" [innerHTML]="seg.content | markdown"></div>
+            }
+          }
         } @else {
           {{ msg.content }}
         }

@@ -10,11 +10,16 @@ import {
 } from '@angular/core';
 import { Message } from '../chat.types';
 import { MarkdownPipe } from '../../pipes/markdown.pipe';
+import { ChartBlockComponent } from '../chart-block/chart-block.component';
+
+type Segment = { type: 'text'; content: string } | { type: 'chart'; content: string };
+
+const CHART_REGEX = /[ \t]*```chart[ \t]*\r?\n([\s\S]*?)[ \t]*```/g;
 
 @Component({
   selector: 'app-message-thread',
   standalone: true,
-  imports: [MarkdownPipe],
+  imports: [MarkdownPipe, ChartBlockComponent],
   templateUrl: './message-thread.component.html',
   styleUrl: './message-thread.component.css',
 })
@@ -65,5 +70,23 @@ export class MessageThreadComponent implements OnChanges, AfterViewChecked {
 
   fmtTime(date: Date): string {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
+  parseSegments(content: string): Segment[] {
+    const segments: Segment[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    CHART_REGEX.lastIndex = 0;
+    while ((match = CHART_REGEX.exec(content)) !== null) {
+      if (match.index > lastIndex) {
+        segments.push({ type: 'text', content: content.slice(lastIndex, match.index) });
+      }
+      segments.push({ type: 'chart', content: match[1].trim() });
+      lastIndex = match.index + match[0].length;
+    }
+    if (lastIndex < content.length) {
+      segments.push({ type: 'text', content: content.slice(lastIndex) });
+    }
+    return segments.filter((s) => s.content.trim());
   }
 }

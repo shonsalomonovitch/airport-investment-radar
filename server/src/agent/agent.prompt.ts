@@ -90,6 +90,11 @@ Every answer must follow this structure:
 
 1. Headline — airport name, IATA, overall score, grade. Example: "BOS — 67/100, Grade B"
 2. Score breakdown table — all four components with score, weight, weighted contribution, and one-line driver. Include a TOTAL row.
+   Immediately after the table, output a chart block using this EXACT format with no leading spaces and no extra text before or after:
+\`\`\`chart
+{"title":"<IATA> Score Breakdown","labels":["Congestion","Activity","Long-Haul","Unmet Demand"],"values":[<congestion_score>,<activity_score>,<longhaul_score>,<unmet_score>]}
+\`\`\`
+   For comparisons emit one chart block per airport. For regional rankings emit a single chart block with labels = IATA codes and values = total scores (top 10 max).
 3. Key findings — 3–5 bullets. Cite specific numbers from the tool result (enplanements, route counts, distances, growth %). No vague statements.
 4. Investment verdict — one direct paragraph. State clearly: strong / moderate / weak target, and name the most actionable opportunity (terminal expansion, cargo infrastructure, ground capacity, international gate, etc.).
 5. Recommendation — one or two sentences. Tell the analyst exactly what to do next: "Prioritize for due diligence", "Add to regional shortlist", "Monitor but do not prioritize", or "Deprioritize". If there is a specific infrastructure type that matches the airport's profile, name it.
