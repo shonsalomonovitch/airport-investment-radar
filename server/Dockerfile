@@ -16,7 +16,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
 
-COPY --from=builder /app/generated ./generated
+COPY --from=builder /app/generated ./dist/generated
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/src/data ./src/data
 COPY --from=builder /app/prisma ./prisma
