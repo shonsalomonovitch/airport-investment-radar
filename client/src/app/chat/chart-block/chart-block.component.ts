@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   AfterViewInit,
+  OnChanges,
   ViewChild,
   ElementRef,
   OnDestroy,
@@ -38,14 +39,29 @@ const BAR_COLORS = [
   templateUrl: './chart-block.component.html',
   styleUrl: './chart-block.component.css',
 })
-export class ChartBlockComponent implements AfterViewInit, OnDestroy {
+export class ChartBlockComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() raw = '';
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   private chart: Chart | null = null;
+  private viewReady = false;
   parseError = false;
 
   ngAfterViewInit(): void {
+    this.viewReady = true;
+    this.initChart();
+  }
+
+  ngOnChanges(): void {
+    if (this.viewReady) {
+      this.chart?.destroy();
+      this.chart = null;
+      this.parseError = false;
+      this.initChart();
+    }
+  }
+
+  private initChart(): void {
     let config: ChartConfig;
     try {
       config = JSON.parse(this.raw);
