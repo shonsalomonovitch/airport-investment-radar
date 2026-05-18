@@ -80,8 +80,7 @@ export class FaaDataService implements OnModuleInit {
       record.historical.sort((a, b) => b.year - a.year)[0] ??
       null;
 
-    const forecast =
-      record.forecast.sort((a, b) => b.year - a.year)[0] ?? null;
+    const forecast = record.forecast.sort((a, b) => b.year - a.year)[0] ?? null;
 
     return { data: { current, forecast }, source: SOURCE };
   }
@@ -106,8 +105,7 @@ export class FaaDataService implements OnModuleInit {
       record.historical.sort((a, b) => b.year - a.year)[0] ??
       null;
 
-    const forecast =
-      record.forecast.sort((a, b) => b.year - a.year)[0] ?? null;
+    const forecast = record.forecast.sort((a, b) => b.year - a.year)[0] ?? null;
 
     return { data: { current, forecast }, source: SOURCE };
   }

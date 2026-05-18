@@ -124,6 +124,9 @@ export class ScoringService {
         ),
       );
       scored.push(...results);
+      if (i + RANK_BATCH_SIZE < airportList.length) {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
     }
 
     const ranked: AirportRankingEntry[] = scored
