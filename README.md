@@ -1,4 +1,83 @@
-# Airport Investment Radar
+<p align="center">
+  <img src="client/public/icon.png" alt="Airport Investment Radar" width="110" />
+</p>
+
+<h1 align="center">Airport Investment Radar</h1>
+
+<p align="center">
+  AI-powered agent for US airport infrastructure investment analysis.<br/>
+  Ask questions in plain English. Get scored, ranked, and sourced answers.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Claude-Sonnet%204.6-blueviolet?logo=anthropic" alt="Claude" />
+  <img src="https://img.shields.io/badge/Angular-20-red?logo=angular" alt="Angular" />
+  <img src="https://img.shields.io/badge/NestJS-10-e0234e?logo=nestjs" alt="NestJS" />
+  <img src="https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql" alt="PostgreSQL" />
+</p>
+
+---
+
+## Features
+
+| | Feature | Description |
+|---|---|---|
+| 🤖 | **AI Agent** | Claude Sonnet 4.6 with structured tool-use loop (up to 8 iterations per query) |
+| 🏆 | **Investment Scoring** | 0–100 composite score across Congestion, Activity, Long-Haul, and Unmet Demand |
+| 🛠️ | **5 Analysis Tools** | Rank by region, compare airports, full analysis, long-haul share, unmet demand |
+| ✈️ | **Live Flight Data** | AeroDataBox API for real-time ops and routes, cached 24h/7d |
+| 📊 | **FAA Forecast Data** | Terminal Area Forecast — enplanements, operations, 20-year growth projections |
+| 💬 | **Chat History** | All conversations persisted in PostgreSQL, reloadable at any time |
+| ✏️ | **Edit Title** | Rename any conversation inline directly from the sidebar |
+| 🗑️ | **Delete Conversation** | Remove conversations you no longer need |
+| 🌙 | **Dark Mode** | Full dark/light toggle with iMessage-style UI |
+| 📝 | **Markdown Rendering** | Assistant responses render tables, headers, and bullet lists |
+| ⏳ | **Typing Indicator** | Animated 3-dot indicator while the agent is thinking |
+| ⚡ | **Quick Scenarios** | 4 one-click example questions to get started immediately |
+
+---
+
+## Screenshots
+
+### Main App
+
+![Main App](docs-images/main%20app.png)
+
+---
+
+### Chat in Action
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs-images/conversation%201.png" alt="Conversation 1" /></td>
+    <td width="50%"><img src="docs-images/conversation%202.png" alt="Conversation 2" /></td>
+  </tr>
+</table>
+
+---
+
+### Dark Mode & Tools Panel
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs-images/dark%20mode.png" alt="Dark Mode" /></td>
+    <td width="50%"><img src="docs-images/tools%20info.png" alt="Tools Info" /></td>
+  </tr>
+</table>
+
+---
+
+### Chat History, Edit Title & Delete
+
+<table>
+  <tr>
+    <td width="34%"><img src="docs-images/chat%20history.png" alt="Chat History" /></td>
+    <td width="33%"><img src="docs-images/edit%20conversation.png" alt="Edit Title" /></td>
+    <td width="33%"><img src="docs-images/delete%20conversation.png" alt="Delete Conversation" /></td>
+  </tr>
+</table>
+
+---
 
 An AI-powered analysis tool for infrastructure investors and analysts. Ask questions in plain English and get structured, data-driven investment scores for any US airport — backed by FAA forecasts, live flight data, and runway metrics.
 
@@ -20,32 +99,7 @@ Every answer includes a scored breakdown across four investment dimensions, a gr
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────┐
-│                Angular Client               │
-│  Chat UI — sends messages, renders markdown │
-└──────────────────┬──────────────────────────┘
-                   │ POST /agent/message
-┌──────────────────▼──────────────────────────┐
-│              NestJS Server                  │
-│                                             │
-│  AgentService ──► Claude (Anthropic API)    │
-│       │                │                   │
-│       │         tool_use calls              │
-│       │                │                   │
-│       └───► ToolsService ──► ScoringService │
-│                              │              │
-│              ┌───────────────┼────────────┐ │
-│              │               │            │ │
-│         FAA Data        AeroDataBox    OurAirports│
-│         (XLSX,          (live API,     (CSV,     │
-│          startup)        pg cache)     startup)  │
-└─────────────────────────────────────────────┘
-                   │
-         PostgreSQL (Prisma Postgres)
-         Conversations · Messages · ApiCache
-         ScoreSnapshots · ToolCall audit log
-```
+<img src="docs-images/Architecture.png" alt="Architecture" width="650" />
 
 ---
 
